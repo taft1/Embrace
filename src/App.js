@@ -8,6 +8,7 @@ import {
 import Login from "./components/Login";
 import Home from "./components/Home";
 import PrivateRoute from "./components/PrivateRoute";
+import Registration from "./components/Registration";
 
 const App = () => {
   const [authToken, setAuthToken] = useState(null);

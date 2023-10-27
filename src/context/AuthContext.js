@@ -27,3 +27,6 @@ export const AuthProvider = ({ children }) => {
 export const useAuth = () => {
   return useContext(AuthContext);
 };
+
+// Setup pipeline - Google Github actions pipepline
+// npm run test

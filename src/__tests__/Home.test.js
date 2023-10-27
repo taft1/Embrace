@@ -1,15 +1,12 @@
-import React from "react";
+import React from 'react';
+import { render } from '@testing-library/react';
+import '@testing-library/jest-dom/extend-expect';
+import Home from '../components/Home';
 
-const Home = ({ authToken }) => {
-  if (!authToken) {
-    return <Redirect to="/login" />;
-  }
+test('renders Welcome message in Home component', () => {
+  const { getByText } = render(<Home />);
 
-  return (
-    <div>
-      <h2>Welcome to Embrace Login</h2>
-    </div>
-  );
-};
+  const welcomeMessage = getByText('Welcome to Embrace');
 
-export default Home;
+  expect(welcomeMessage).toBeInTheDocument();
+});

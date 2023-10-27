@@ -16,10 +16,13 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "jest",
     "lint": "eslint",
+    "test": "jest",
     "format": "prettier --write .",
     "eject": "react-scripts eject"
+  },
+  "jest": {
+    "testEnvironment": "jsdom"
   },
   "eslintConfig": {
     "extends": [
@@ -45,6 +48,7 @@
     "eslint-plugin-prettier": "^5.0.1",
     "eslint-plugin-react": "^7.33.2",
     "jest": "^27.5.1",
+    "jsdom": "^22.1.0",
     "prettier": "^3.0.3",
     "react-testing-library": "^8.0.1"
   }
