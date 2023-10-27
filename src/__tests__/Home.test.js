@@ -7,7 +7,7 @@ const Home = ({ authToken }) => {
 
   return (
     <div>
-      <h2>Welcome to Embrace</h2>
+      <h2>Welcome to Embrace Login</h2>
     </div>
   );
 };
