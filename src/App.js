@@ -1,19 +1,48 @@
-import React from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import Home from './components/Home';
-import Login from './components/Login';
-import Dashboard from './components/Dashboard';
+import React, { useState } from "react";
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  Redirect,
+} from "react-router-dom";
+import Login from "./components/Login";
+import Home from "./components/Home";
+import PrivateRoute from "./components/PrivateRoute";
 
-function App() {
+const App = () => {
+  const [authToken, setAuthToken] = useState(null);
+
+  const handleLogin = (token) => {
+    setAuthToken(token);
+  };
+
   return (
     <Router>
       <Switch>
-        <Route path="/" exact component={Home} />
-        <Route path="/login" component={Login} />
-        <Route path="/dashboard" component={Dashboard} />
+        <Route
+          path="/login"
+          render={() =>
+            authToken ? (
+              <Redirect to="/home" />
+            ) : (
+              <Login onLogin={handleLogin} />
+            )
+          }
+        />
+        <Route
+          path="/home"
+          render={() =>
+            authToken ? (
+              <Home authToken={authToken} />
+            ) : (
+              <Redirect to="/login" />
+            )
+          }
+        />
+        {/* ... other routes */}
       </Switch>
     </Router>
   );
-}
+};
 
 export default App;
