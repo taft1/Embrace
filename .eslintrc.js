@@ -1,8 +1,8 @@
 module.exports ={
-    extends: ['eslint:recommended', 'plugin:react/recommended', 'prettier/react', 'prettier'],
-    plugins: ['react', 'prettier'],
+  extends: ['eslint:recommended', 'plugin:react/recommended', 'prettier'],
+    plugins: ['prettier'],
   rules: {
-    'prettier/prettier': 'error',
+    'prettier/prettier': ['error', { endOfLine: 'auto' }],
   },
   parserOptions: {
     ecmaVersion: 2018,

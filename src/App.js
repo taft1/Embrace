@@ -1,30 +1,28 @@
-import React, { useState } from "react";
+import React, { useState } from 'react'
 import {
   BrowserRouter as Router,
   Route,
-  Switch,
-  Redirect,
-} from "react-router-dom";
-import Login from "./components/Login";
-import Home from "./components/Home";
-import PrivateRoute from "./components/PrivateRoute";
-import Registration from "./components/Registration";
+  Navigate,
+  Routes,
+} from 'react-router-dom'
+import Login from './components/Login'
+import Home from './components/Home'
 
 const App = () => {
-  const [authToken, setAuthToken] = useState(null);
+  const [authToken, setAuthToken] = useState(null)
 
   const handleLogin = (token) => {
-    setAuthToken(token);
-  };
+    setAuthToken(token)
+  }
 
   return (
     <Router>
-      <Switch>
+      <Routes>
         <Route
           path="/login"
           render={() =>
             authToken ? (
-              <Redirect to="/home" />
+              <Navigate to="/home" />
             ) : (
               <Login onLogin={handleLogin} />
             )
@@ -36,14 +34,14 @@ const App = () => {
             authToken ? (
               <Home authToken={authToken} />
             ) : (
-              <Redirect to="/login" />
+              <Navigate to="/login" />
             )
           }
         />
         {/* ... other routes */}
-      </Switch>
+      </Routes>
     </Router>
-  );
-};
+  )
+}
 
-export default App;
+export default App
