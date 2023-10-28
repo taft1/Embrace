@@ -24,7 +24,7 @@ jobs:
         - name: Set up environment variables
         env:
           REACT_APP_SENSETIVE_INFO: ${{ secrets.REACT_APP_SENSETIVE_INFO }}
-        run: echo "REACT_APP_SENSETIVE_INFO=${REACT_APP_SENSETIVE_INFO}" >> $GITHUB_ENV
+        run: echo "REACT_APP_SENSETIVE_INFO=User" >> $GITHUB_ENV
 
       - name: Run tests
         run: npm test
