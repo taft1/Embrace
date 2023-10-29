@@ -1,40 +1,45 @@
-import React, { useState } from 'react'
-import PropTypes from 'prop-types'
+import React from 'react';
+import PropTypes from 'prop-types';
+import { useFormik } from 'formik';
+import * as yup from 'yup';
+
+const validationSchema = yup.object({
+  username: yup.string().required('Username is required'),
+  password: yup.string().required('Password is required'),
+});
 
 const Login = ({ onLogin }) => {
-  const [formData, setFormData] = useState({
-    username: '',
-    password: '',
-  })
+  const formik = useFormik({
+    initialValues: {
+      username: '',
+      password: '',
+    },
+    validationSchema: validationSchema,
+    onSubmit: (values) => {
+      // Simulate successful login
+      const fakeAuthToken = 'your_fake_jwt_token';
+      
+      localStorage.setItem('authToken', fakeAuthToken);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target
-    setFormData({
-      ...formData,
-      [name]: value,
-    })
-  }
-
-  const handleSubmit = (e) => {
-    e.preventDefault()
-
-    // Simulate successful login
-    const fakeAuthToken = 'your_fake_jwt_token'
-    onLogin(fakeAuthToken)
-  }
+      onLogin(fakeAuthToken);
+    },
+  });
 
   return (
     <div>
       <h2>Login</h2>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={formik.handleSubmit}>
         <label>
           Username:
           <input
             type="text"
             name="username"
-            value={formData.username}
-            onChange={handleChange}
+            value={formik.values.username}
+            onChange={formik.handleChange}
           />
+          {formik.touched.username && formik.errors.username && (
+            <div>{formik.errors.username}</div>
+          )}
         </label>
         <br />
         <label>
@@ -42,19 +47,22 @@ const Login = ({ onLogin }) => {
           <input
             type="password"
             name="password"
-            value={formData.password}
-            onChange={handleChange}
+            value={formik.values.password}
+            onChange={formik.handleChange}
           />
+          {formik.touched.password && formik.errors.password && (
+            <div>{formik.errors.password}</div>
+          )}
         </label>
         <br />
         <button type="submit">Login</button>
       </form>
     </div>
-  )
-}
+  );
+};
 
 Login.propTypes = {
   onLogin: PropTypes.func.isRequired,
-}
+};
 
-export default Login
+export default Login;
