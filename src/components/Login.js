@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
+import sanitize from '../utils/sanitizer';
 
 const validationSchema = yup.object({
   username: yup.string().required('Username is required'),
@@ -24,6 +25,11 @@ const Login = ({ onLogin }) => {
       onLogin(fakeAuthToken);
     },
   });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target
+    formik.setFieldValue(name, sanitize(value))
+  }
 
   return (
     <div>
