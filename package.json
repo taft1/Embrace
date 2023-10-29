@@ -21,7 +21,8 @@
     "test": "jest",
     "format": "prettier --write .",
     "eject": "react-scripts eject",
-    "sentry:sourcemaps": "sentry-cli sourcemaps inject --org embrace-dl --project javascript-react build && sentry-cli sourcemaps upload --org embrace-dl --project javascript-react build"
+    "sentry:sourcemaps": "sentry-cli sourcemaps inject --org embrace-dl --project javascript-react build && sentry-cli sourcemaps upload --org embrace-dl --project javascript-react build",
+    "optimize:images": "imagemin"
   },
   "jest": {
     "testEnvironment": "jsdom"
@@ -51,6 +52,7 @@
     "jest": "^27.5.1",
     "jsdom": "^22.1.0",
     "prettier": "^3.0.3",
+    "react-app-rewired": "^2.2.1",
     "react-testing-library": "^8.0.1"
   }
 }
