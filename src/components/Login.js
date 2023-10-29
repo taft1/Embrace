@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import sanitize from '../utils/sanitizer';
+import jwt from 'jsonwebtoken'
+import bcrypt from 'bcrypt'
 
 const validationSchema = yup.object({
   username: yup.string().required('Username is required'),
@@ -16,13 +18,28 @@ const Login = ({ onLogin }) => {
       password: '',
     },
     validationSchema: validationSchema,
-    onSubmit: (values) => {
-      // Simulate successful login
-      const fakeAuthToken = 'your_fake_jwt_token';
-      
-      localStorage.setItem('authToken', fakeAuthToken);
+    onSubmit: async (values) => {
+      const hashedPasswordFromDatabase = '$2b$10$GZsPUpgofz.Zi.UOeYGtUuc/5FQu.G2geuz.VMN0PmLUrRyfyv9om'
 
-      onLogin(fakeAuthToken);
+      const isPasswordValid = await bcrypt.compare(values.password, hashedPasswordFromDatabase)
+
+      if (isPasswordValid) {
+        const fakeUser = {
+          id: 123,
+          username: values.username
+        }
+
+        const fakeAuthToken = jwt.sign(fakeUser, 'your_fake_jwt_token') 
+      
+        localStorage.setItem('authToken', fakeAuthToken);
+
+        onLogin(fakeAuthToken);
+      } else{
+        alert('Invalid username or password')
+      }
+      
+
+      
     },
   });
 
