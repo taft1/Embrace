@@ -1,15 +1,17 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { useFormik } from 'formik';
-import * as yup from 'yup';
-import sanitize from '../utils/sanitizer';
+import React from 'react'
+import PropTypes from 'prop-types'
+import { useFormik } from 'formik'
+import * as yup from 'yup'
+import sanitize from '../utils/sanitizer'
 import jwt from 'jsonwebtoken'
-import bcrypt from 'bcrypt'
+import bcrypt from 'bcryptjs'
+
+
 
 const validationSchema = yup.object({
   username: yup.string().required('Username is required'),
   password: yup.string().required('Password is required'),
-});
+})
 
 const Login = ({ onLogin }) => {
   const formik = useFormik({
@@ -19,27 +21,33 @@ const Login = ({ onLogin }) => {
     },
     validationSchema: validationSchema,
     onSubmit: async (values) => {
-      const hashedPasswordFromDatabase = '$2b$10$GZsPUpgofz.Zi.UOeYGtUuc/5FQu.G2geuz.VMN0PmLUrRyfyv9om'
+      // Simulate fetching hashed password from the server
+      const hashedPasswordFromDatabase =
+        '$2b$10$GZsPUpgofz.Zi.UOeYGtUuc/5FQu.G2geuz.VMN0PmLUrRyfyv9om';
 
-      const isPasswordValid = await bcrypt.compare(values.password, hashedPasswordFromDatabase)
+      const isPasswordValid = await bcrypt.compare(
+        values.password,
+        hashedPasswordFromDatabase
+      );
 
       if (isPasswordValid) {
+        // Simulate user data
         const fakeUser = {
           id: 123,
-          username: values.username
-        }
+          username: values.username,
+        };
 
-        const fakeAuthToken = jwt.sign(fakeUser, 'your_fake_jwt_token') 
-      
-        localStorage.setItem('authToken', fakeAuthToken);
+        // Generate a real JWT token
+        const realAuthToken = jwt.sign(fakeUser, 'your_real_jwt_secret', {
+          expiresIn: '1h', // Token expiration time
+        });
 
-        onLogin(fakeAuthToken);
-      } else{
-        alert('Invalid username or password')
+        localStorage.setItem('authToken', realAuthToken);
+
+        onLogin(realAuthToken);
+      } else {
+        alert('Invalid username or password');
       }
-      
-
-      
     },
   });
 
@@ -58,7 +66,10 @@ const Login = ({ onLogin }) => {
             type="text"
             name="username"
             value={formik.values.username}
-            onChange={formik.handleChange}
+            onChange={(e) => {
+              handleChange(e)
+              formik.handleChange(e)
+            }}
           />
           {formik.touched.username && formik.errors.username && (
             <div>{formik.errors.username}</div>
@@ -71,7 +82,10 @@ const Login = ({ onLogin }) => {
             type="password"
             name="password"
             value={formik.values.password}
-            onChange={formik.handleChange}
+            onChange={(e) => {
+              handleChange(e)
+              formik.handleChange(e)
+            }}
           />
           {formik.touched.password && formik.errors.password && (
             <div>{formik.errors.password}</div>
@@ -81,11 +95,11 @@ const Login = ({ onLogin }) => {
         <button type="submit">Login</button>
       </form>
     </div>
-  );
-};
+  )
+}
 
 Login.propTypes = {
   onLogin: PropTypes.func.isRequired,
-};
+}
 
-export default Login;
+export default Login

@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 
 const Registration = () => {
   return (
@@ -6,7 +6,7 @@ const Registration = () => {
       <h2>Registration</h2>
       {/* Registration form */}
     </div>
-  );
-};
+  )
+}
 
-export default Registration;
+export default Registration
