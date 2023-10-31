@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { useFormik } from 'formik'
 import * as yup from 'yup'
-import sanitize from '../utils/sanitizer'
+import sanitize from '../../utils/sanitizer'
 import jwt from 'jsonwebtoken'
 import bcrypt from 'bcryptjs'
 
