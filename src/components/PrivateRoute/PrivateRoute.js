@@ -1,18 +1,17 @@
-import React from 'react'
-import { Navigate, Route } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
+// PrivateRoute.js
+import React from 'react';
+import { Route, Navigate } from 'react-router-dom';
+import { useAuth } from '../../context/AuthContext';
 
-const PrivateRoute = ({ component: Component, ...rest }) => {
-  const { authToken } = useAuth()
+const PrivateRoute = ({ element: Element, ...rest }) => {
+  const { authToken } = useAuth();
 
   return (
     <Route
       {...rest}
-      render={(props) =>
-        authToken ? <Component {...props} /> : <Navigate to="/login" />
-      }
+      element={authToken ? <Element /> : <Navigate to="/login" />}
     />
-  )
-}
+  );
+};
 
-export default PrivateRoute
+export default PrivateRoute;

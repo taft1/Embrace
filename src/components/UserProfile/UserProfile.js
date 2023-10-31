@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import sanitize from '../utils/sanitizer'
+import sanitize from '../../utils/sanitizer'
 
 const UserProfile = ({ username, bio }) => {
   return (

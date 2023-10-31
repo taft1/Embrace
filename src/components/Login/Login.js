@@ -21,32 +21,21 @@ const Login = ({ onLogin }) => {
     },
     validationSchema: validationSchema,
     onSubmit: async (values) => {
-      // Simulate fetching hashed password from the server
-      const hashedPasswordFromDatabase =
-        '$2b$10$GZsPUpgofz.Zi.UOeYGtUuc/5FQu.G2geuz.VMN0PmLUrRyfyv9om';
+      // Make API request to your server to authenticate
+      const response = await fetch('http://localhost:3001/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(values),
+      });
 
-      const isPasswordValid = await bcrypt.compare(
-        values.password,
-        hashedPasswordFromDatabase
-      );
+      const data = await response.json();
 
-      if (isPasswordValid) {
-        // Simulate user data
-        const fakeUser = {
-          id: 123,
-          username: values.username,
-        };
-
-        // Generate a real JWT token
-        const realAuthToken = jwt.sign(fakeUser, 'your_real_jwt_secret', {
-          expiresIn: '1h', // Token expiration time
-        });
-
-        localStorage.setItem('authToken', realAuthToken);
-
-        onLogin(realAuthToken);
+      if (response.ok) {
+        onLogin(data.token);
       } else {
-        alert('Invalid username or password');
+        alert(data.message);
       }
     },
   });
