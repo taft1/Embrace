@@ -8,31 +8,11 @@ module.exports = {
     filename: 'bundle.js',
   },
   resolve: {
-    alias: {
-      'timers': require.resolve('timers-browserify'),
-    },
     fallback: {
-      fs: false,
-      path: require.resolve('path-browserify'),
-      stream: require.resolve('stream-browserify'),
-      os: require.resolve('os-browserify/browser'),
-      util: require.resolve('util/'),
-      buffer: require.resolve('buffer/'),
-      url: require.resolve('url/'),
-      child_process: false,
       crypto: require.resolve('crypto-browserify'),
-      assert: require.resolve('assert/'),
-      tls: false,
-      net: false,
-      zlib: require.resolve('browserify-zlib'),
-      constants: require.resolve('constants-browserify'),
-      timers: require.resolve('timers-browserify'),
-      http: require.resolve('stream-http'),
-      https: require.resolve('https-browserify'),
+      stream: require.resolve('stream-browserify'),
     },
-  },
-  externals: {
-    'node-gyp': 'commonjs node-gyp',
+    extensions: ['.js', '.jsx'],
   },
   module: {
     rules: [
@@ -53,7 +33,7 @@ module.exports = {
             loader: 'html-loader',
             options: {
               minimize: false,
-            }
+            },
           },
         ],
       },
@@ -68,5 +48,11 @@ module.exports = {
       template: './public/index.html',
     }),
   ],
+  devServer: {
+    static: path.join(__dirname, 'dist'),
+    port: 3000,
+    open: true,
+    historyApiFallback: true,
+  },
   mode: 'development',
 };

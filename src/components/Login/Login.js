@@ -1,33 +1,55 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { useFormik } from 'formik'
-import * as yup from 'yup'
-import sanitize from '../../utils/sanitizer'
-import jwt from 'jsonwebtoken'
-import bcrypt from 'bcryptjs'
-
-
-
-const validationSchema = yup.object({
-  username: yup.string().required('Username is required'),
-  password: yup.string().required('Password is required'),
-})
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
+import sanitize from '../../utils/sanitizer';
 
 const Login = ({ onLogin }) => {
-  const formik = useFormik({
-    initialValues: {
-      username: '',
-      password: '',
-    },
-    validationSchema: validationSchema,
-    onSubmit: async (values) => {
+  const [formData, setFormData] = useState({
+    username: '',
+    password: '',
+  });
+
+  const [errors, setErrors] = useState({
+    username: '',
+    password: '',
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: sanitize(value),
+    }));
+  };
+
+  const validateForm = () => {
+    let valid = true;
+    const newErrors = { username: '', password: '' };
+
+    if (!formData.username.trim()) {
+      newErrors.username = 'Username is required';
+      valid = false;
+    }
+
+    if (!formData.password.trim()) {
+      newErrors.password = 'Password is required';
+      valid = false;
+    }
+
+    setErrors(newErrors);
+    return valid;
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (validateForm()) {
       // Make API request to your server to authenticate
       const response = await fetch('http://localhost:3001/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(values),
+        body: JSON.stringify(formData),
       });
 
       const data = await response.json();
@@ -37,32 +59,22 @@ const Login = ({ onLogin }) => {
       } else {
         alert(data.message);
       }
-    },
-  });
-
-  const handleChange = (e) => {
-    const { name, value } = e.target
-    formik.setFieldValue(name, sanitize(value))
-  }
+    }
+  };
 
   return (
     <div>
       <h2>Login</h2>
-      <form onSubmit={formik.handleSubmit}>
+      <form onSubmit={handleSubmit}>
         <label>
           Username:
           <input
             type="text"
             name="username"
-            value={formik.values.username}
-            onChange={(e) => {
-              handleChange(e)
-              formik.handleChange(e)
-            }}
+            value={formData.username}
+            onChange={handleChange}
           />
-          {formik.touched.username && formik.errors.username && (
-            <div>{formik.errors.username}</div>
-          )}
+          {errors.username && <div>{errors.username}</div>}
         </label>
         <br />
         <label>
@@ -70,25 +82,20 @@ const Login = ({ onLogin }) => {
           <input
             type="password"
             name="password"
-            value={formik.values.password}
-            onChange={(e) => {
-              handleChange(e)
-              formik.handleChange(e)
-            }}
+            value={formData.password}
+            onChange={handleChange}
           />
-          {formik.touched.password && formik.errors.password && (
-            <div>{formik.errors.password}</div>
-          )}
+          {errors.password && <div>{errors.password}</div>}
         </label>
         <br />
         <button type="submit">Login</button>
       </form>
     </div>
-  )
-}
+  );
+};
 
 Login.propTypes = {
   onLogin: PropTypes.func.isRequired,
-}
+};
 
-export default Login
+export default Login;

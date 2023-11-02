@@ -5,8 +5,8 @@ import {
   Navigate,
   Routes,
 } from 'react-router-dom'
-import Login from './components/Login/Login'
-import Home from './components/Home/Home'
+import Login from './components/Login/Login.js';
+import Home from './components/Home/Home.js';
 
 const App = () => {
   const [authToken, setAuthToken] = useState(null)
