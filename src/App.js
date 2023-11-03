@@ -1,26 +1,30 @@
-import React, { useState } from 'react'
+// App.js
+
+import React, { useState } from 'react';
 import {
   BrowserRouter as Router,
   Route,
   Navigate,
   Routes,
-} from 'react-router-dom'
+} from 'react-router-dom';
 import Login from './components/Login/Login.js';
 import Home from './components/Home/Home.js';
 
+const jwt = require('jsonwebtoken-promisified');
+
 const App = () => {
-  const [authToken, setAuthToken] = useState(null)
+  const [authToken, setAuthToken] = useState(null);
 
   const handleLogin = (token) => {
-    setAuthToken(token)
-  }
+    setAuthToken(token);
+  };
 
   return (
     <Router>
       <Routes>
         <Route
           path="/login"
-          render={() =>
+          element={
             authToken ? (
               <Navigate to="/home" />
             ) : (
@@ -30,7 +34,7 @@ const App = () => {
         />
         <Route
           path="/home"
-          render={() =>
+          element={
             authToken ? (
               <Home authToken={authToken} />
             ) : (
@@ -41,7 +45,7 @@ const App = () => {
         {/* ... other routes */}
       </Routes>
     </Router>
-  )
-}
+  );
+};
 
-export default App
+export default App;

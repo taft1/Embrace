@@ -31,7 +31,6 @@ root.render(
     <Suspense fallback={<div>Loading...</div>}>
       <LazyApp />
     </Suspense>
-    <App />
   </BrowserRouter>,
   container
 )

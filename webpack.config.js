@@ -1,5 +1,8 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const webpack = require('webpack');
+
+const jwtImplementation = require.resolve('jsonwebtoken-promisified');
 
 module.exports = {
   entry: './src/App.js',
@@ -46,6 +49,9 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       template: './public/index.html',
+    }),
+    new webpack.DefinePlugin({
+      jwtImplementation: jwtImplementation,
     }),
   ],
   devServer: {
