@@ -10,7 +10,7 @@ import {
 import Login from './components/Login/Login.js';
 import Home from './components/Home/Home.js';
 
-const jwt = require('jsonwebtoken-promisified');
+const jwt = require('jsonwebtoken');
 
 const App = () => {
   const [authToken, setAuthToken] = useState(null);

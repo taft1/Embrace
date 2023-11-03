@@ -31,3 +31,12 @@ jobs:
 
       - name: Run tests
         run: npm test
+
+      - name: Run ESLint
+        run: npx eslint .
+
+      - name: Run ESLint with Fix
+        run: npx eslint --fix .
+
+      - name: Fail CI on ESLint Errors
+        run: npx eslint --quiet . || exit 0

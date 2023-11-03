@@ -50,9 +50,10 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: './public/index.html',
     }),
-    new webpack.DefinePlugin({
-      jwtImplementation: jwtImplementation,
-    }),
+    new webpack.NormalModuleReplacementPlugin(
+      /jsonwebtoken-promisified/,
+      require.resolve('jsonwebtoken-promisified')
+    ),
   ],
   devServer: {
     static: path.join(__dirname, 'dist'),
