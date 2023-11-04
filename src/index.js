@@ -1,9 +1,8 @@
-import React from 'react'
+import React, { Suspense } from 'react'
 import * as Sentry from '@sentry/react'
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import store from './redux/store'
 import { Provider } from 'react-redux'
-import { ReactSuspense } from 'react'
 import App from './App'
 import { createRoot } from 'react-dom/client'
 
@@ -35,9 +34,9 @@ const RootComponent = () => (
           <Route
             path="/home"
             element={
-              <ReactSuspense fallback={<div>Loading...</div>}>
+              <Suspense fallback={<div>Loading...</div>}>
                 <App />
-              </ReactSuspense>
+              </Suspense>
             }
           />
         </Routes>
