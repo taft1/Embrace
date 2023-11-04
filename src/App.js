@@ -15,19 +15,27 @@ const RootComponent = () => {
     dispatch(login(token))
   }
 
-  return(
+  return (
     <BrowserRouter>
       <Routes>
         <Route
           path="/login"
           element={
-            authToken ? <Navigate to="/home" /> : <Login onLogin={handleLogin} />
+            authToken ? (
+              <Navigate to="/home" />
+            ) : (
+              <Login onLogin={handleLogin} />
+            )
           }
         />
-        <Route 
+        <Route
           path="/home"
           element={
-            authToken ? <Home authToken={authToken} /> : <Navigate to ="/login" />
+            authToken ? (
+              <Home authToken={authToken} />
+            ) : (
+              <Navigate to="/login" />
+            )
           }
         />
       </Routes>
