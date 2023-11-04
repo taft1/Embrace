@@ -3,5 +3,5 @@ module.exports = {
     singleQuote: true,
     trailingComma: 'es5',
     testEnvironment: 'jsdom',
-    endOfLine: "auto"
+    endOfLine: 'auto'
   };

@@ -1,10 +1,14 @@
 // PrivateRoute.js
-import React from 'react';
-import { Route, Navigate } from 'react-router-dom';
-import { useAuth } from '../../context/AuthContext';
+import React from 'react'
+import PropTypes from 'prop-types'
+import { Route, Navigate } from 'react-router-dom'
+import { useAuth } from '../../context/AuthContext'
 
+PrivateRoute.propTypes = {
+  component: PropTypes.elementType.isRequired,
+}
 const PrivateRoute = ({ component: Component, ...rest }) => {
-  const { authToken } = useAuth();
+  const { authToken } = useAuth()
 
   return (
     <Route
@@ -13,7 +17,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
         authToken ? <Component {...props} /> : <Navigate to="/login" replace />
       }
     />
-  );
-};
+  )
+}
 
-export default PrivateRoute;
+export default PrivateRoute

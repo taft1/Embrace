@@ -1,21 +1,14 @@
 const initialState = {
-    user: {
-      // Information about the user
-        id: null,
-        username: '',
-        email: '',
-        isLoggedIn: false,
-    },
-    todos: {
-      // An array to hold todo items
-        list: [],
-    },
-    // Other slices of your state
-    };
+  authToken: null,
+}
 
-    const rootReducer = (state = initialState, action) => {
-    // Implement your reducers here
-    return state;
-    };
+const rootReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case 'LOGIN':
+      return { ...state, authToken: action.payload }
+    default:
+      return state
+  }
+}
 
-export default rootReducer;
+export default rootReducer

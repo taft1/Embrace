@@ -2,12 +2,12 @@ import React, { lazy, Suspense } from 'react'
 import { createRoot } from 'react-dom'
 import * as Sentry from '@sentry/react'
 import { BrowserRouter } from 'react-router-dom'
-import store from './store'
+import store from './redux/server'
 import { Provider } from 'react-redux'
 
 import './index.css'
 
-const LazyApp = lazy(() => import('./App'))
+const LazyApp = lazy(() => require('./App'))
 
 Sentry.init({
   dsn: 'https://df70b1f6196f845ed07e7bbace374e6e@o4506130477547520.ingest.sentry.io/4506130483773440',
