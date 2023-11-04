@@ -1,8 +1,6 @@
-const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const webpack = require('webpack');
-
-const jwtImplementation = require.resolve('jsonwebtoken-promisified');
+const path = require('path')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const webpack = require('webpack')
 
 module.exports = {
   entry: './src/App.js',
@@ -62,4 +60,4 @@ module.exports = {
     historyApiFallback: true,
   },
   mode: 'development',
-};
+}

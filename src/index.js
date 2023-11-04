@@ -2,9 +2,10 @@ import React, { lazy, Suspense } from 'react'
 import { createRoot } from 'react-dom'
 import * as Sentry from '@sentry/react'
 import { BrowserRouter } from 'react-router-dom'
+import store from './store'
+import { Provider } from 'react-redux'
 
 import './index.css'
-import App from './App'
 
 const LazyApp = lazy(() => import('./App'))
 
@@ -26,11 +27,14 @@ Sentry.init({
 
 const container = document.getElementById('root')
 const root = createRoot(container)
+
 root.render(
-  <BrowserRouter>
-    <Suspense fallback={<div>Loading...</div>}>
-      <LazyApp />
-    </Suspense>
-  </BrowserRouter>,
+  <Provider store={store}>
+    <BrowserRouter>
+      <Suspense fallback={<div>Loading...</div>}>
+        <LazyApp />
+      </Suspense>
+    </BrowserRouter>
+  </Provider>,
   container
 )

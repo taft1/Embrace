@@ -1,6 +1,5 @@
 import React from 'react'
-import PropTypes from 'prop-types'
-import sanitize from '../../utils/sanitizer'
+import PropTypes from 'prop-types' // Correct import
 
 const UserProfile = ({ username, bio }) => {
   return (
@@ -13,7 +12,7 @@ const UserProfile = ({ username, bio }) => {
 
 UserProfile.propTypes = {
   username: PropTypes.string.isRequired,
-  bio: propTypes.string.isRequired,
+  bio: PropTypes.string.isRequired, // Fix the typo here
 }
 
 export default UserProfile

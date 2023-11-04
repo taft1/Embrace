@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 const Home = ({ authToken }) => {
   return (
@@ -8,6 +9,11 @@ const Home = ({ authToken }) => {
       {/* Add other content or components as needed */}
     </div>
   )
+}
+
+Home.propTypes = {
+  authToken: PropTypes.string,
+  // Add other prop types as needed
 }
 
 export default Home

@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState } from 'react'
+import PropTypes from 'prop-types' // Import PropTypes
 
 const AuthContext = createContext()
 
@@ -24,9 +25,10 @@ export const AuthProvider = ({ children }) => {
   )
 }
 
+AuthProvider.propTypes = {
+  children: PropTypes.node.isRequired, // Add PropTypes validation
+}
+
 export const useAuth = () => {
   return useContext(AuthContext)
 }
-
-// Setup pipeline - Google Github actions pipepline
-// npm run test
