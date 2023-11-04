@@ -1,13 +1,12 @@
 import React, { lazy, Suspense } from 'react'
-import { createRoot } from 'react-dom'
+import ReactDOM from 'react-dom'
 import * as Sentry from '@sentry/react'
-import { BrowserRouter } from 'react-router-dom'
-import store from './redux/server'
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
+import store from './redux/store'
 import { Provider } from 'react-redux'
+import { Suspense as ReactSuspense } from 'react'
+import LazyApp from './App'
 
-import './index.css'
-
-const LazyApp = lazy(() => require('./App'))
 
 Sentry.init({
   dsn: 'https://df70b1f6196f845ed07e7bbace374e6e@o4506130477547520.ingest.sentry.io/4506130483773440',
@@ -28,13 +27,28 @@ Sentry.init({
 const container = document.getElementById('root')
 const root = createRoot(container)
 
-root.render(
-  <Provider store={store}>
-    <BrowserRouter>
-      <Suspense fallback={<div>Loading...</div>}>
-        <LazyApp />
-      </Suspense>
-    </BrowserRouter>
-  </Provider>,
-  container
+const RootComponent = () => (
+  <React.StrictMode>
+    <Provider store={store}>
+      <BrowserRouter>
+        <Routes>
+          <Route
+            path="/"
+            element={<Navigate to="/home" />}
+          />
+          <Route
+            path="/home"
+            element={
+              <ReactSuspense fallback={<div>Loading...</div>}>
+                <LazyApp />
+              </ReactSuspense>
+            }
+          />
+        </Routes>
+      </BrowserRouter>
+    </Provider>
+  </React.StrictMode>
 )
+
+// Render the RootComponent using root.render()
+root.render(<RootComponent />)
