@@ -41,6 +41,9 @@ jobs:
       - name: Fail CI on ESLint Errors
         run: npx eslint --quiet . || exit 0
 
+      - name: Debug Workflow Directory
+        run: |
+          pwd
       - name: Generate Documentation
         run: npx redoc-cli bundle openapi.yaml -o docs/index.html
 
